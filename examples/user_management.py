@@ -1,7 +1,7 @@
 from onvif import ONVIFCamera
 
 if __name__ == '__main__':
-    mycam = ONVIFCamera('10.10.16.19', 80, 'admin', 'admin1234')
+    mycam = ONVIFCamera('10.10.16.19', 80, 'admin', 'admin123')
     devicemgmt_service = mycam.create_devicemgmt_service()
 
     users = devicemgmt_service.GetUsers()
