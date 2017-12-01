@@ -1,6 +1,5 @@
 from onvif import ONVIFCamera
 
-
 class UserManagement(object):
     def __init__(self, ip, port, administratorName, administratorPassword):
         self.ip = ip
@@ -13,12 +12,14 @@ class UserManagement(object):
         devicemgmt_service = mycam.create_devicemgmt_service()
 
         users = devicemgmt_service.GetUsers()
+        updateUsers = []
         for user in users:
             if user.Username == userName:
                 user.Password = newPassword
+                updateUsers.append(user)
 
         request = devicemgmt_service.create_type("SetUser")
-        request.User = users
+        request.User = updateUsers
         request.ForcePersistence = False
 
         devicemgmt_service.SetUser(request)
