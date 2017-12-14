@@ -1,5 +1,17 @@
 from onvif import ONVIFCamera
 
+
+class User():
+    def __init__(self, Username, Password, UserLevel):
+        self.Username = Username
+        self.Password = Password
+        self.UserLevel = UserLevel
+
+    def __init__(self, Username, Password):
+        self.Username = Username
+        self.Password = Password
+
+
 class UserManagement(object):
     def __init__(self, ip, port, administratorName, administratorPassword):
         self.ip = ip
@@ -9,9 +21,10 @@ class UserManagement(object):
 
     def update_password(self, userName, newPassword):
         mycam = ONVIFCamera(self.ip, self.port, self.administratorName, self.administratorPassword)
-        devicemgmt_service = mycam.create_devicemgmt_service()
+        devicemgmt_service = mycam.create_devicemgmt_service(False)
 
         users = devicemgmt_service.GetUsers()
+
         updateUsers = []
         for user in users:
             if user.Username == userName:
@@ -25,6 +38,7 @@ class UserManagement(object):
         devicemgmt_service.SetUser(request)
 
 
+# '10.10.16.19', 80, 'admin', 'admin1234'
 if __name__ == '__main__':
     usermgmt = UserManagement('10.10.16.19', 80, 'admin', 'admin123')
-    usermgmt.update_password('admin', "admin1234")
+    usermgmt.update_password('admin', "admin123")
